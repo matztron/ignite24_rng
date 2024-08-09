@@ -1,4 +1,7 @@
-read_verilog /home/jakob/Desktop/Ignite2024/rand/*.v
-synth -top top
-show -prefix top -format pdf -notitle top
-write_verilog top.v
+read_verilog ro_top.v randModule.v notModule.v
+synth -top ro_top
+
+show -prefix top -format pdf -notitle ro_top
+show -prefix randMod -format pdf -notitle randModule
+
+write_verilog synth_ro_top.v

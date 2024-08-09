@@ -1,4 +1,4 @@
-module top(clk, en, d_out);
+module ro_top(clk, en, d_out);
     input clk, en;
     output[7:0] d_out;
 
