@@ -1,0 +1,37 @@
+here is a guide i put toghether on how we can test the entropy of our ring oszillators;
+
+ring oscillator test: (according to SP800-90b):
+1. Data collection: creade a dataset of at least 1.000.000 samples
+
+2. initial entropy estimate (idependent approach):
+
+2.1 for a dataset of lenght l, determine the most common value x in that dataset, and calculate `p = frac{#(x in dataset)}{l}`
+
+2.2 calculate the upper bound on the probability of the most common value as `p_u = min(1, p + 2.576 \sqrt(\frac{p (1-p)}{l}))`
+
+2.3 the estimated min-entropy is `-log_2 (p_u)` (interpretation: value between 0 and 1 where higher number = better)
+
+3. restart test
+3.1 collect data: restart the system 1000 times, collecting 1000 samples with each restart. store the output in a M[i][j] matrix where j is the index of a sample and i is the index of a restart (so i is row index and j is column index)
+
+3.2 perform sanity check 
+
+3.2.1 set `\alpha = \frac{0.01}{2000 k}` where k is the sample size
+
+3.2.2 for each row of M, find the frequency of the most common sample value Fr_i. Set FR to the `max(Fr_i)`
+
+3.2.3 repeat 3.2.2 for each column of M, finding FC
+
+3.2.4 `F=max(FR, FC)`
+
+3.2.5 `p = 2^{-H}` where H is the initial estimate from step 
+`U = 1000p + Z_{1- \alpha} \sqrt(1000p (1-p)) ` (die definition von Z in dieser formel wurde in der quelle nicht erläutert)
+
+3.2.6 if  is greater then U, the test fails
+
+3.3 validation test
+
+3.3.1 if the test in 3.2 was successfull, repeat the test from step 2 on the row and column datasets (row dataset is M[1][1], ..., M[1][j], M[2][1], ...M[2][j], ... M[i][1], ...M[i][j]. the column dataset is the inverse, so M[1][1], ... M[i][1], M[1][2], ... M[i][j])
+producing H_row and H_column
+
+3.3.2 if `min(H_row, H_column)` is less then half of H, the validation fails. otherwise, the entropy will be validated at `min(H, H_row, H_column)`
