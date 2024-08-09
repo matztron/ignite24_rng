@@ -1,44 +1,43 @@
-module ro_top(clk, en, d_out);
-    input clk, en;
-    output[7:0] d_out;
+// The Ring - 8bit TRNG
+// Done in association with FPGA Ignite 2024
+// 09.08.2024
 
-    reg[7:0] d_out_internal;
-    wire[15:0] ro_out;
-    wire[7:0] xor_out;
+// _Disclaimer_:
+// Do not generate random numbers for too long pls
+// Because RO have exessive dynamic power!
+// Check if chip becomes hot! :)
 
-    // do not generate random number for too long pls
-    randModule rm0(.en(en), .randOut(ro_out[0]));
-    randModule rm1(.en(en), .randOut(ro_out[1]));
-    randModule rm2(.en(en), .randOut(ro_out[2]));
-    randModule rm3(.en(en), .randOut(ro_out[3]));
-    randModule rm4(.en(en), .randOut(ro_out[4]));
-    randModule rm5(.en(en), .randOut(ro_out[5]));
-    randModule rm6(.en(en), .randOut(ro_out[6]));
-    randModule rm7(.en(en), .randOut(ro_out[7]));
+// _Ports_:
+// - clk: Clock that samples the RO values (probably 50ishMHz IO clk)
+// - en: Turn on RO. You might want to turn off RO when not using as to safe power and maybe stop chip from aging too much ;)
+// - d_out: 8-bit random values sampled form RO
 
-    randModule rm8(.en(en), .randOut(ro_out[8]));
-    randModule rm9(.en(en), .randOut(ro_out[9]));
-    randModule rm10(.en(en), .randOut(ro_out[10]));
-    randModule rm11(.en(en), .randOut(ro_out[11]));
-    randModule rm12(.en(en), .randOut(ro_out[12]));
-    randModule rm13(.en(en), .randOut(ro_out[13]));
-    randModule rm14(.en(en), .randOut(ro_out[14]));
-    randModule rm15(.en(en), .randOut(ro_out[15]));
+module ro_top #(parameter SIZE = 8) (
+    input clk,
+    input en,
+    output [SIZE-1:0] d_out
+);
 
-    assign xor_out[0] = ro_out[0] ^ ro_out[1];
-    assign xor_out[1] = ro_out[2] ^ ro_out[3];
-    assign xor_out[2] = ro_out[4] ^ ro_out[5];
-    assign xor_out[3] = ro_out[6] ^ ro_out[7];
-    assign xor_out[4] = ro_out[8] ^ ro_out[9];
-    assign xor_out[5] = ro_out[10] ^ ro_out[11];
-    assign xor_out[6] = ro_out[12] ^ ro_out[13];
-    assign xor_out[7] = ro_out[14] ^ ro_out[15];
+    reg[SIZE-1:0] d_out_internal;
+    wire[2*SIZE-1:0] ro_out;
+    wire[SIZE-1:0] xor_out;
 
+    // Generate ring oscillators
+    genvar i;
+    generate
+        for (i = 0; i < SIZE; i=i+1) begin
+            generic_ro #(.SIZE(1)) ro_1 (.en(en), .ro_out(ro_out[2*i]));   // 3-inv elements
+            generic_ro #(.SIZE(2)) ro_2 (.en(en), .ro_out(ro_out[2*i+1])); // 5-inv elements
+            assign xor_out[i] = ro_out[2*i] ^ ro_out[2*i+1];
+        end
+    endgenerate
 
+    // FF that sample the XOR output
     always @(posedge clk) begin
         d_out_internal <= xor_out;
     end
 
+    // Assign to output
     assign d_out = d_out_internal;
 
 endmodule

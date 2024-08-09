@@ -1,7 +1,7 @@
-read_verilog ro_top.v randModule.v notModule.v
-synth -top ro_top
+read_verilog ro_top.v generic_ro.v notModule.v
+synth -top generic_ro
 
-show -prefix top -format pdf -notitle ro_top
-show -prefix randMod -format pdf -notitle randModule
+#show -prefix top -format pdf -notitle ro_top
+show -prefix generic_ro -format pdf -notitle generic_ro
 
 write_verilog synth_ro_top.v

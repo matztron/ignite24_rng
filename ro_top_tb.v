@@ -4,11 +4,16 @@ module ro_top_tb();
     reg clk_tb;
     wire [7:0] d_out_tb;
 
+    /*ro_top ro_top_I (
+        .clk(clk_tb),
+        .en(en_tb),
+        .d_out(d_out_tb)
+    );*/
     ro_top ro_top_I (
-    .clk(clk_tb),
-    .en(en_tb),
-    .d_out(d_out_tb)
-);
+        .clk(clk_tb),
+        .en(en_tb),
+        .d_out(d_out_tb)
+    );
 
     initial begin
         clk_tb = 1'b0;
@@ -23,7 +28,7 @@ module ro_top_tb();
         #30;
         en_tb = 1'b1;
 
-        #50;
+        #200;
 
         $finish();
 
