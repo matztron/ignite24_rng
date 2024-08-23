@@ -1,0 +1,14 @@
+{
+    "DESIGN_NAME": "ro_top",
+    "VERILOG_FILES": "dir::src/*.v",
+    "CLOCK_PORT": "clk",
+    "CLOCK_PERIOD": 25.0,
+    "FP_PDN_MULTILAYER": false,
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 55 55",
+    "SYNTH_NO_FLAT": true,
+    "SYNTH_SHARE_RESOURCES": false,
+    "PL_BASIC_PLACEMENT": true,
+    "FP_CORE_UTIL": 0.6,
+    "PL_TARGET_DENSITY": 0.5
+}

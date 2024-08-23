@@ -1,4 +1,4 @@
-read_verilog ro_top.v generic_ro.v notModule.v
+read_verilog ro_top.v generic_ro.v notGate.v
 synth -top generic_ro
 
 #show -prefix top -format pdf -notitle ro_top

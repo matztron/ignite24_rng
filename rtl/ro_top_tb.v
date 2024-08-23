@@ -28,10 +28,7 @@ module ro_top_tb();
         #30;
         en_tb = 1'b1;
 
-        #200;
-
         $finish();
-
 
     end
 
