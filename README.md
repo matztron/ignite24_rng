@@ -14,8 +14,7 @@ Just three files:
 - ro_top.v
 - generic_ro.v
 - notGate.v
-The constraint file is also given in this repo as config.json
-(this could however maybe be extended further!)
+- Constraint file: config.json
 
 
 # How design should be connected in Tapeout
