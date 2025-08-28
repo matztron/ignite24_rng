@@ -1,7 +1,7 @@
 -------------------------------------
-| Tool Version : Vivado v.2023.2
-| Date         : Thu Aug 22 22:00:58 2024
-| Host         : FRDC91009
+| Tool Version : Vivado v.2024.2
+| Date         : Thu Aug 28 22:57:31 2025
+| Host         : debian
 | Design       : design_1
 | Device       : xc7a35t-cpg236-1--
 -------------------------------------

@@ -6,7 +6,7 @@ module generic_ro #(parameter SIZE = 2) (
     output ro_out
 );
 
-    wire [2*SIZE:0] interm_wires;
+    (* mark_debug = "true" *) wire [2*SIZE:0] interm_wires;
 
     // NAND
     `ifdef SIMULATION

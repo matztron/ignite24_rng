@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.runs/synth_1/top.tcl"
+  variable script "/home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.runs/synth_1/top.tcl"
   variable category "vivado_synth"
 }
 
@@ -55,47 +55,35 @@ if {$::dispatch::connected} {
   }
 }
 
-proc create_report { reportName command } {
-  set status "."
-  append status $reportName ".fail"
-  if { [file exists $status] } {
-    eval file delete [glob $status]
-  }
-  send_msg_id runtcl-4 info "Executing : $command"
-  set retval [eval catch { $command } msg]
-  if { $retval != 0 } {
-    set fp [open $status w]
-    close $fp
-    send_msg_id runtcl-5 warning "$msg"
-  }
-}
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 3
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.cache/wt [current_project]
-set_property parent.project_path C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.xpr [current_project]
+set_property webtalk.parent_dir /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.cache/wt [current_project]
+set_property parent.project_path /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
+set_property board_part_repo_paths {/home/matthias/.Xilinx/Vivado/2024.2/xhub/board_store/xilinx_board_store} [current_project]
 set_property board_part digilentinc.com:basys3:part0:1.2 [current_project]
-set_property ip_output_repo c:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.cache/ip [current_project]
+set_property ip_output_repo /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_verilog C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/UartStates.vh
+read_verilog /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/UartStates.vh
 read_verilog -library xil_defaultlib {
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/BaudRateGenerator.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/Uart8.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/Uart8Receiver.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/Uart8Transmitter.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/clock_divider.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/generic_ro.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/notModule.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/ro_top.v
-  C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/sources_1/new/top.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/BaudRateGenerator.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/Uart8.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/Uart8Receiver.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/Uart8Transmitter.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/clock_divider.v
+  /home/matthias/fpga_projects/ignite24_rng/rtl/generic_ro.v
+  /home/matthias/fpga_projects/ignite24_rng/rtl/not_gate.v
+  /home/matthias/fpga_projects/ignite24_rng/rtl/trng_top.v
+  /home/matthias/fpga_projects/ignite24_rng/vivado/fpga/top.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -106,12 +94,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/constrs_1/new/Basys-3-Master.xdc
-set_property used_in_implementation false [get_files C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/constrs_1/new/Basys-3-Master.xdc]
+read_xdc /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.srcs/constrs_1/imports/new/Basys-3-Master.xdc
+set_property used_in_implementation false [get_files /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.srcs/constrs_1/imports/new/Basys-3-Master.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Users/Z649713/Documents/Repos/ignite24_ro/ignite24_ro.srcs/utils_1/imports/synth_1/top.dcp
+read_checkpoint -auto_incremental -incremental /home/matthias/fpga_projects/ignite24_rng/vivado/ignite_trng/ignite_trng.srcs/utils_1/imports/synth_1/top.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
@@ -128,7 +116,7 @@ set_param constraints.enableBinaryConstraints false
 write_checkpoint -force -noxdef top.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-create_report "synth_1_synth_report_utilization_0" "report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb"
+generate_parallel_reports -reports { "report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb"  } 
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]

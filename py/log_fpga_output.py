@@ -2,7 +2,8 @@ import serial
 
 f = open("rng_dump.txt", "w")
 
-s = serial.Serial('COM7')
+#s = serial.Serial('COM7')
+s = serial.Serial('/dev/ttyUSB1')
 sample_size = 1000000
 i = 0
 

@@ -32,7 +32,7 @@ module top(
     
     clock_divider #(
         .DIV(2)
-    )(
+    ) clk_div_I (
         .clk_in(clk),
         .rst(rst),
         .clk_out(clk_50MHz)
@@ -42,9 +42,9 @@ module top(
     wire clk_50MHz;
     
     // <<< Our design >>>
-    ro_top #(
+    trng_top #(
         .SIZE(8)
-    ) ro_top_I (
+    ) trng_top_I (
         .clk(clk_50MHz),
         .en(en_uart_sw),
         .d_out(data)
@@ -55,7 +55,7 @@ module top(
     Uart8  #(
     .CLOCK_RATE(100000000), // board internal clock
     .BAUD_RATE(9600)
-)(
+) uart_I (
     .clk(clk),
     // rx interface
     /*.rx(),
