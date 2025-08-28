@@ -9,7 +9,7 @@ module ro_top_tb();
         .en(en_tb),
         .d_out(d_out_tb)
     );*/
-    ro_top ro_top_I (
+    trng_top ro_top_I (
         .clk(clk_tb),
         .en(en_tb),
         .d_out(d_out_tb)
@@ -21,12 +21,20 @@ module ro_top_tb();
     end
 
     initial begin
-        $dumpfile("out/ro_top.vcd");
+        $dumpfile("out/trng_top.vcd");
         $dumpvars(0, ro_top_tb);
+
+        $display("Start of simulation");
+
+`ifdef SIMULATION
+        $display("Simulation variable present");
+`endif
 
         en_tb = 1'b0;
         #30;
         en_tb = 1'b1;
+
+        #200;
 
         $finish();
 

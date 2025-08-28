@@ -3,16 +3,16 @@
 // 09.08.2024
 
 // _Disclaimer_:
-// Do not generate random numbers for too long pls
-// Because RO have exessive dynamic power!
-// Check if chip becomes hot! :)
+// Depending on the SIZE parameters the RO might result in exessive dynamic power!
+// Monitor current and chip temperature to be extra safe
+// A small setting of SIZE = 8 was demonstrated in FPGA to be not noticeable
 
 // _Ports_:
 // - clk: Clock that samples the RO values (probably 50ishMHz IO clk)
 // - en: Turn on RO. You might want to turn off RO when not using as to safe power and maybe stop chip from aging too much ;)
 // - d_out: 8-bit random values sampled form RO
 
-module ro_top #(parameter SIZE = 8) (
+module trng_top #(parameter SIZE = 8) (
     input clk,
     input en,
     output [SIZE-1:0] d_out

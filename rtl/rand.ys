@@ -1,7 +1,0 @@
-read_verilog ro_top.v generic_ro.v notGate.v
-synth -top generic_ro
-
-#show -prefix top -format pdf -notitle ro_top
-show -prefix generic_ro -format pdf -notitle generic_ro
-
-write_verilog synth_ro_top.v

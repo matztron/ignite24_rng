@@ -1,0 +1,7 @@
+read_verilog rtl/trng_top.v rtl/generic_ro.v rtl/not_gate.v
+synth -top trng_top
+
+show -prefix out/trng_top -format pdf -notitle trng_top
+#show -prefix out/generic_ro -format pdf -notitle generic_ro
+
+#write_verilog synth_ro_top.v
